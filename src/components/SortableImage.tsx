@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 
-const ImageContainer = ({ image, updateCheckList }) => {
+const SortableImage = ({ image, updateCheckList }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id: image.id });
     const style = {
@@ -51,4 +51,4 @@ const ImageContainer = ({ image, updateCheckList }) => {
     );
 };
 
-export default ImageContainer;
+export default SortableImage;
