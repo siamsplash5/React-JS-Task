@@ -10,6 +10,7 @@ import Header from "./Header";
 import ImageCard from "./ImageCard";
 import SortableImage from "./SortableImage";
 import UploadImage from "./UploadImage";
+
 function Gallery() {
     const [imageFileSrcList, setImageFileSrcList] = useState([...data]);
     const [checked, setChecked] = useState([]);
@@ -40,7 +41,7 @@ function Gallery() {
         setTotalChecked(updatedCheckedList.length);
     };
 
-    const handleDelete = () => {
+    const deleteCheckList = () => {
         setImageFileSrcList((prevList) =>
             prevList.filter((item) => !checked.includes(item.id))
         );
@@ -50,7 +51,10 @@ function Gallery() {
 
     return (
         <div className="p-4 m-4 bg-white">
-            <Header totalChecked={totalChecked} handleDelete={handleDelete}/>
+            <Header
+                totalChecked={totalChecked}
+                deleteCheckList={deleteCheckList}
+            />
             <hr />
             <br />
             <DndContext
@@ -63,7 +67,12 @@ function Gallery() {
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                         {imageFileSrcList.map((image, index) => (
-                            <ImageCard image={image} key={image.id} index = {index} checked={checked}>
+                            <ImageCard
+                                image={image}
+                                key={image.id}
+                                index={index}
+                                checked={checked}
+                            >
                                 <SortableImage
                                     image={image}
                                     updateCheckList={updateCheckList}
