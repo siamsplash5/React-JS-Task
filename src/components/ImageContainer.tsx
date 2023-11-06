@@ -39,7 +39,7 @@ const ImageContainer = ({ image, updateCheckList }) => {
                 className={"h-full w-full object-cover border-2 rounded-xl"}
                 src={image.src}
             />
-            {isHovered && (
+            {(isHovered || isChecked) && (
                 <input
                     type="checkbox"
                     onChange={handleCheckboxChange}

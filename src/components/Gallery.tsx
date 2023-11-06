@@ -16,18 +16,17 @@ function Gallery() {
 
     const onDragEnd = (event) => {
         const { active, over } = event;
-        if (active.id == over.id) return;
+        if (active.id === over.id) return;
         setImageFileSrcList((prevList) => {
             const oldIndex = prevList.findIndex(
                 (user) => user.id === active.id
             );
             const newIndex = prevList.findIndex((user) => user.id === over.id);
-            return arrayMove(imageFileSrcList, oldIndex, newIndex);
+            return arrayMove(prevList, oldIndex, newIndex);
         });
     };
 
     const updateCheckList = (isChecked, imageId) => {
-        console.log(isChecked, imageId);
         const updatedCheckedList = [...checked];
 
         if (!isChecked) {
@@ -37,32 +36,36 @@ function Gallery() {
             updatedCheckedList.splice(index, 1);
         }
         setChecked(updatedCheckedList);
-        setTotalChecked(checked.length+1);
+        setTotalChecked(updatedCheckedList.length);
     };
 
-    const handleDelete = ()=>{
-        setImageFileSrcList((prevList)=> prevList.filter((item)=>!checked.includes(item.id)));
+    const handleDelete = () => {
+        setImageFileSrcList((prevList) =>
+            prevList.filter((item) => !checked.includes(item.id))
+        );
         setChecked([]);
+        setTotalChecked(0);
     };
-
-    
 
     return (
         <div className="p-4 m-4 bg-white">
-            <div className="w-full flex py-3 px-5 h-16 items-center justify-between">
+            <div className="w-full flex py-3 px-5 h-16 mb-2 items-center justify-between">
                 <div>
                     {totalChecked > 0 ? (
-                        <p className="text-gray-600 font-semibold">
+                        <p className="text-gray-800 font-semibold">
                             {totalChecked} {totalChecked > 1 ? "Files" : "File"}{" "}
                             Selected
                         </p>
                     ) : (
-                        <p className="text-gray-600 font-semibold"> Gallery</p>
+                        <p className="text-gray-600 font-semibold">Gallery</p>
                     )}
                 </div>
                 <div>
                     {totalChecked > 0 && (
-                        <button onClick={handleDelete} className="text-red-500 font-semibold">
+                        <button
+                            onClick={handleDelete}
+                            className="text-red-500 font-semibold"
+                        >
                             Delete {totalChecked > 1 ? "Files" : "File"}
                         </button>
                     )}
@@ -78,23 +81,21 @@ function Gallery() {
                     items={imageFileSrcList}
                     strategy={rectSortingStrategy}
                 >
-                    <div className="grid grid-cols-5 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                         {imageFileSrcList.map((image, index) => (
                             <div
                                 className={`
-                                        ${
-                                            index === 0
-                                                ? "col-span-2 row-span-2"
-                                                : "col-span-1 row-span-1"
-                                        }
+                                 ${
+                                     index === 0
+                                         ? "col-span-2 row-span-2"
+                                         : "col-span-1 row-span-1"
+                                 }
                                          ${
                                              checked.includes(image.id)
-                                                 ? "hover:brightness-75 transition duration-300 ease-in-out"
+                                                 ? "brightness-75 transition duration-300 ease-in-out"
                                                  : ""
                                          }
-                                        relative
-                                        
-                                    `}
+                                        relative hover:brightness-75 transition duration-300 ease-in-out`}
                                 key={image.id}
                             >
                                 <ImageContainer
