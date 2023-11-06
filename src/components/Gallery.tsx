@@ -5,21 +5,22 @@ import {
     SortableContext
 } from "@dnd-kit/sortable";
 import { useState } from "react";
-import { imageFileSrcList as data } from "../../public/data";
+import { imageList as data } from "../../public/data";
 import Header from "./Header";
 import ImageCard from "./ImageCard";
 import SortableImage from "./SortableImage";
 import UploadImage from "./UploadImage";
 
 function Gallery() {
-    const [imageFileSrcList, setImageFileSrcList] = useState([...data]);
-    const [checked, setChecked] = useState([]);
-    const [totalChecked, setTotalChecked] = useState(0);
+    const [imageList, setImageList] = useState([...data]);
+    const [totalChecked, setTotalChecked] = useState(
+        imageList.filter((item) => item.checked === true).length
+    );
 
     const onDragEnd = (event) => {
         const { active, over } = event;
         if (active.id === over.id) return;
-        setImageFileSrcList((prevList) => {
+        setImageList((prevList) => {
             const oldIndex = prevList.findIndex(
                 (user) => user.id === active.id
             );
@@ -29,23 +30,24 @@ function Gallery() {
     };
 
     const updateCheckList = (isChecked, imageId) => {
-        const updatedCheckedList = [...checked];
-
-        if (!isChecked) {
-            updatedCheckedList.push(imageId);
-        } else {
-            const index = updatedCheckedList.indexOf(imageId);
-            updatedCheckedList.splice(index, 1);
-        }
-        setChecked(updatedCheckedList);
-        setTotalChecked(updatedCheckedList.length);
+       setImageList((prevList) => {
+           return prevList.map((item) => {
+                console.log(imageId, isChecked)
+               if (item.id === imageId) {
+                   return { ...item, checked: !isChecked };
+               }
+               return item;
+           });
+       });
+       setTotalChecked(
+           imageList.filter((item) => item.checked === true).length +1
+       );
     };
 
     const deleteCheckList = () => {
-        setImageFileSrcList((prevList) =>
-            prevList.filter((item) => !checked.includes(item.id))
+        setImageList((prevList) =>
+            prevList.filter((item) => item.checked===false)
         );
-        setChecked([]);
         setTotalChecked(0);
     };
 
@@ -62,16 +64,15 @@ function Gallery() {
                 onDragEnd={onDragEnd}
             >
                 <SortableContext
-                    items={imageFileSrcList}
+                    items={imageList}
                     strategy={rectSortingStrategy}
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                        {imageFileSrcList.map((image, index) => (
+                        {imageList.map((image, index) => (
                             <ImageCard
                                 image={image}
                                 key={image.id}
                                 index={index}
-                                checked={checked}
                             >
                                 <SortableImage
                                     image={image}

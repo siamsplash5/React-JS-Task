@@ -1,3 +1,4 @@
-import imageFileSrcList from "./imageFileSrcList";
+import imageList from "./imageFileSrcList";
 
-export { imageFileSrcList };
+export { imageList };
+

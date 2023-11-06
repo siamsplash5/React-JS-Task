@@ -1,4 +1,4 @@
-const imageFileSrcList = [
+const imageList = [
     {
         id: 1,
         src: "../images/image-1.webp",
@@ -56,4 +56,4 @@ const imageFileSrcList = [
     },
 ];
 
-export default imageFileSrcList;
+export default imageList;

@@ -1,5 +1,5 @@
 
-function ImageCard({children, image, index, checked}) {
+function ImageCard({children, image, index}) {
     return (
         <div
             className={`
@@ -9,7 +9,7 @@ function ImageCard({children, image, index, checked}) {
                         : "col-span-1 row-span-1"
                 }
             ${
-                checked.includes(image.id)
+                image.checked
                     ? "brightness-75 transition duration-300 ease-in-out"
                     : ""
             }
