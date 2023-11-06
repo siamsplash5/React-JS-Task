@@ -1,5 +1,6 @@
+/* Image Card Component will contain image */
 
-function ImageCard({children, image, index}) {
+function ImageCard({ children, image, index }) {
     return (
         <div
             className={`

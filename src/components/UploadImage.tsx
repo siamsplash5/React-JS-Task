@@ -1,3 +1,5 @@
+/* Image Upload Component, for UI purpose only */
+
 const UploadImage = () => {
     return (
         <label

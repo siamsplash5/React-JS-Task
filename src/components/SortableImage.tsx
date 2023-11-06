@@ -1,3 +1,5 @@
+/* Sortable Image Component */
+
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
